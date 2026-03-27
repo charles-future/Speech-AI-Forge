@@ -1,0 +1,22 @@
+version: "3.8"
+
+services:
+  chat-tts-forge-webui:
+    build: .
+    container_name: chat-tts-forge-webui
+    restart: always
+    volumes:
+      - "./:/app"
+    ports:
+      - 7860:7860
+    user: "${UID}:${GID}"
+    environment:
+      NVIDIA_VISIBLE_DEVICES: all
+    command: >
+      python3 webui.py
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              capabilities: [gpu]

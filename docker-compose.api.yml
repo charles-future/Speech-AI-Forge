@@ -1,0 +1,21 @@
+version: "3.8"
+
+services:
+  chat-tts-forge-api:
+    build: .
+    container_name: chat-tts-forge-api
+    restart: always
+    volumes:
+      - "./:/app"
+    ports:
+      - "7870:7870"
+    environment:
+      NVIDIA_VISIBLE_DEVICES: all
+    command: >
+      python3 launch.py
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              capabilities: [gpu]
